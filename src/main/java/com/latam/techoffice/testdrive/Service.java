@@ -41,6 +41,7 @@ import com.mongodb.client.result.UpdateResult;
 public class Service {
 
     private static final Logger LOG = Logger.getLogger(Service.class.getName());
+
     
     public static final String JMS_FACTORY = "java:/AMQConnectionFactory";
 
