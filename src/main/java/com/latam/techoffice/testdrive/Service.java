@@ -116,13 +116,12 @@ public class Service {
         if(customer.getCustomerID() == null)
             throw new InvalidException(String.format("customer ID is null"));
         
-        return findByCustomerID(customer.getCustomerID());
+        return findByCustomerID(customer.getCustomerID().toString());
     }
     
     
     private Document findByCustomerID(String customerID) throws NotFoundException {
-        Bson filter = new Document().append(Customer.TAG_CUSTOMER_ID, 
-                                                        new ObjectId(customerID));
+        Bson filter = new Document().append(Customer.TAG_CUSTOMER_ID, new ObjectId(customerID));
         Document found = getCollection().find(filter).first();
         if(found == null) throw new NotFoundException(
                             String.format("customer %s not found", customerID));

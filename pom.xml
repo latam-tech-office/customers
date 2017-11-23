@@ -41,6 +41,28 @@
             <version>${mongo.version}</version>
             <scope>compile</scope>
         </dependency>
+        
+        <!-- TESTING TESTING TESTING TESTING TESTING TESTING TESTING TESTING -->
+        <!-- Eclipse MOXy for Testing Marshalling and Unmarshalling of
+        JSON content back and forth -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
+            <version>2.6.5</version>
+            <scope>test</scope>
+        </dependency>        
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>1.5.0</version>
+            <scope>test</scope>
+        </dependency>        
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <version>1.1.11.Final</version>
+            <scope>test</scope>
+        </dependency>        
     </dependencies>
 
     <dependencyManagement>
@@ -77,6 +99,10 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>            
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>

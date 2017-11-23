@@ -11,6 +11,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.bson.types.ObjectId;
+
+import com.latam.techoffice.testdrive.error.InvalidException;
 /**
  *
  * @author Mauricio "Maltron" Leal <maltron at gmail dot com>
@@ -24,22 +27,22 @@ public class Customer implements Serializable {
     private static final Logger LOG = Logger.getLogger(Customer.class.getName());
 
     public static final String TAG_CUSTOMER_ID = "_id";
-    @XmlElement(name = TAG_CUSTOMER_ID, nillable = true, required = false, type = String.class)
-    private String customerID;
+    @XmlElement(name = TAG_CUSTOMER_ID, nillable = true, required = false)
+    private ObjectId customerID;
     
     public static final String TAG_FIRST_NAME = "firstName";
-    @XmlElement(name = TAG_FIRST_NAME, nillable = false, required = true, type = String.class)
+    @XmlElement(name = TAG_FIRST_NAME, nillable = false, required = true)
     private String firstName;
     
     public static final String TAG_LAST_NAME = "lastName";
-    @XmlElement(name = TAG_LAST_NAME, nillable = false, required = true, type = String.class)
+    @XmlElement(name = TAG_LAST_NAME, nillable = false, required = true)
     private String lastName;
     
     public Customer() {
     }
 
-    public Customer(String customerID) {
-        this.customerID = customerID;
+    public Customer(String customerID) throws InvalidException {
+        setCustomerID(customerID);
     }
 
     public Customer(String firstName, String lastName) {
@@ -47,17 +50,32 @@ public class Customer implements Serializable {
         this.lastName = lastName;
     }
 
-    public Customer(String customerID, String firstName, String lastName) {
+    public Customer(String customerID, String firstName, String lastName) 
+                                                        throws InvalidException {
+        setCustomerID(customerID);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
+    public Customer(ObjectId customerID, String firstName, String lastName) {
         this.customerID = customerID;
         this.firstName = firstName;
         this.lastName = lastName;
     }
     
-    public String getCustomerID() {
+    public ObjectId getCustomerID() {
         return customerID;
     }
+    
+    public final void setCustomerID(String customerID) throws InvalidException {
+        if(customerID == null) throw new InvalidException("customerID is null");
+        if(!ObjectId.isValid(customerID))
+            throw new InvalidException("customerID is not valid number: "+customerID);
+        
+        setCustomerID(new ObjectId(customerID));
+    }
 
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(ObjectId customerID) {
         this.customerID = customerID;
     }
 
@@ -113,7 +131,7 @@ public class Customer implements Serializable {
     public JsonObject toJson() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         if(this.customerID != null) 
-            builder.add(TAG_CUSTOMER_ID, this.customerID);
+            builder.add(TAG_CUSTOMER_ID, this.customerID.toString());
         
         if(this.firstName != null)
             builder.add(TAG_FIRST_NAME, this.firstName);
