@@ -8,22 +8,25 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
+import com.latam.techoffice.testdrive.marker.IntegrationTest;
 
 /**
  *
  * @author Mauricio "Maltron" Leal <maltron at gmail dot com>
  */
+@Category(IntegrationTest.class)
 @RunWith(Arquillian.class)
 public class TestArquilian implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(TestArquilian.class.getName());
     
-    @Deployment
-    public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class).addClass(Service.class);
-    }
+//    @Deployment
+//    public static WebArchive createDeployment() {
+//        return ShrinkWrap.create(WebArchive.class);
+//    }
     
 //    @ArquillianResource
 //    private URL deploymentURL;
