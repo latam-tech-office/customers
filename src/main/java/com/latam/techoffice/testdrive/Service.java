@@ -119,7 +119,6 @@ public class Service {
         return findByCustomerID(customer.getCustomerID().toString());
     }
     
-    
     private Document findByCustomerID(String customerID) throws NotFoundException {
         Bson filter = new Document().append(Customer.TAG_CUSTOMER_ID, new ObjectId(customerID));
         Document found = getCollection().find(filter).first();
